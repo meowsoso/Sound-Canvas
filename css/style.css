@@ -2,10 +2,27 @@
   margin: 0;
   padding: 0;
 }
-
+/* 
 body {
-  /* background: url("http://placekitten.com/960/700"); */
+  background: url("../img/Waterlilies.jpg");
   background-size: cover;
+  background-repeat: no-repeat;
   min-width: 100vw;
   height: 100vh;
+} */
+
+#bgCover {
+  display: flex;
+  margin: 0 auto;
+  background-image: url("../img/Waterlilies.jpg");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+#defaultCanvas0 {
+  display: inline-flex;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
