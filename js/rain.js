@@ -1,5 +1,5 @@
 let acceleration = 0.0098;
-let nDrops = 500;
+let nDrops = 1000;
 let drops = [];
 let song;
 let button;
@@ -24,7 +24,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(960, 650);
+  createCanvas(window.innerWidth, window.innerHeight);
   //   pg = createGraphics(960, 700);
 
   //   image(img, 0, 0);
@@ -47,13 +47,16 @@ function isChange(volLevel) {
   return Math.abs(volLevel - vol) / vol > 0.4;
 }
 
+function isRipple(volLevel) {
+  return Math.abs(volLevel - vol) / vol > 0.8 && song.currentTime() > 40;
+}
+
 function draw() {
   clear();
   //   background(bg);
   let volLevel = amp.getLevel();
   if (isChange(volLevel)) {
-    vol = volLevel;
-    nDrops = map(vol, 0, 1, 0, 500);
+    nDrops = map(vol, 0, 1, 0, 1000);
   }
   //   console.log(vol);
   for (let i = 0; i < nDrops; i++) {
@@ -61,7 +64,14 @@ function draw() {
   }
 
   // background fadeout
-  drawDot(random(width), random(height));
+  if (song.currentTime() > 15) {
+    drawDot(random(width), random(height));
+  }
+  // trigger ripple
+  if (isRipple(volLevel)) {
+    $("body").ripples("drop", random(width), random(height), 5, 0.2);
+  }
+  vol = volLevel;
 }
 
 // draw lines as raindrops
@@ -104,16 +114,22 @@ function Drop() {
 
 /////////////////// background fadeout effect //////////////////
 
-let backgroundCover = document.getElementById("bgCover"),
-  bgCanvas = backgroundCover.getContext("2d"),
-  brushRadius = backgroundCover.width / 50,
-  img = new Image();
+let backgroundCover = document.getElementById("bgCover");
+backgroundCover.width = window.innerWidth * 2;
+backgroundCover.height = window.innerHeight * 2;
+backgroundCover.style.width = window.innerWidth + "px";
+backgroundCover.style.height = window.innerHeight + "px";
+
+let bgCanvas = backgroundCover.getContext("2d"),
+  brushRadius = backgroundCover.width / 200;
+bgCanvas.scale(2, 2);
 console.log(bgCanvas);
 
+img = new Image();
 img.src = "../img/woman_son.jpg";
 img.onload = function() {
   bgCanvas.imageSmoothingEnabled = false;
-  bgCanvas.drawImage(img, 0, 0, backgroundCover.width, backgroundCover.height);
+  bgCanvas.drawImage(img, 0, 0, window.innerWidth, window.innerHeight);
   console.log(window.devicePixelRatio);
 };
 

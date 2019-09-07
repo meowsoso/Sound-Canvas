@@ -4,7 +4,8 @@ $(document).ready(function() {
     $("body").ripples({
       resolution: 512,
       dropRadius: 20,
-      perturbance: 0.02
+      perturbance: 0.03,
+      interactive: false
     });
   } catch (e) {
     $(".error")
