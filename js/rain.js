@@ -5,7 +5,8 @@ let song;
 let button;
 let amp;
 let vol = 0;
-let pg;
+let compressor;
+let currentTime;
 // let width = window.innerWidth;
 // let height = window.innerHeight;
 
@@ -19,23 +20,24 @@ function toggleSong() {
 
 function preload() {
   song = loadSound("../audio/Helios - Nothing It Can.mp3");
-  bg = loadImage("../img/Water_Lilies.jpg");
+  // bg = loadImage("../img/Water_Lilies.jpg");
   //   img = loadImage("http://placekitten.com/960/924");
 }
 
 function setup() {
+  frameRate(60);
   createCanvas(window.innerWidth, window.innerHeight);
-  //   pg = createGraphics(960, 700);
 
-  //   image(img, 0, 0);
-  //   pond.id = "lilyPond";
   button = createButton("toggle");
   button.mousePressed(toggleSong);
 
   // play music and get amp
-  song.play();
   amp = new p5.Amplitude();
+  compressor = new p5.Compressor();
+  song.disconnect();
+  compressor.process(song);
   // add rain lines
+  song.play();
   for (i = 0; i < nDrops; i++) {
     drops.push(new Drop());
   }
@@ -44,19 +46,21 @@ function setup() {
 // check if vol change more than 20%
 function isChange(volLevel) {
   //   console.log(Math.abs(volLevel - vol) / vol);
-  return Math.abs(volLevel - vol) / vol > 0.4;
+  return Math.abs(volLevel - vol) / vol > 0.3;
 }
 
-function isRipple(volLevel) {
-  return Math.abs(volLevel - vol) / vol > 0.8 && song.currentTime() > 40;
+function isRipple(volLevel, currentTime) {
+  return Math.abs(volLevel - vol) / vol > 0.8 && currentTime > 45;
 }
 
 function draw() {
   clear();
+  currentTime = song.currentTime();
   //   background(bg);
   let volLevel = amp.getLevel();
   if (isChange(volLevel)) {
     nDrops = map(vol, 0, 1, 0, 1000);
+    vol = volLevel;
   }
   //   console.log(vol);
   for (let i = 0; i < nDrops; i++) {
@@ -64,14 +68,13 @@ function draw() {
   }
 
   // background fadeout
-  if (song.currentTime() > 15) {
+  if (currentTime > 25) {
     drawDot(random(width), random(height));
   }
   // trigger ripple
-  if (isRipple(volLevel)) {
+  if (isRipple(volLevel, currentTime)) {
     $("body").ripples("drop", random(width), random(height), 5, 0.2);
   }
-  vol = volLevel;
 }
 
 // draw lines as raindrops
@@ -95,7 +98,7 @@ function Drop() {
   };
 
   this.draw = function() {
-    stroke(155, 50, 255);
+    stroke("rgba(28, 166, 154, 0.68)");
     strokeWeight(3);
     line(this.x, this.y, this.x, this.y + this.length);
   };
@@ -156,9 +159,3 @@ function getBrushPos(xRef, yRef) {
     )
   };
 }
-backgroundCover.addEventListener("click", function(e) {
-  e.preventDefault();
-  console.log("clicked");
-  const brushPos = getBrushPos(e.clientX, e.clientY);
-  drawDot(brushPos.x, brushPos.y);
-});
