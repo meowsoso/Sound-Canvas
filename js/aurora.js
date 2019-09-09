@@ -65,23 +65,23 @@ function draw() {
 let rayCount = 512;
 const rayPropCount = 8;
 const rayPropsLength = rayCount * rayPropCount;
-const baseLength = 200;
-const rangeLength = 200;
+const baseLength = 150;
+const rangeLength = 150;
 // const baseSpeed = 0.05;
 const baseSpeed = 0.1;
 const rangeSpeed = 0.1;
 const baseWidth = 5;
 const rangeWidth = 10;
-const baseHue = 180;
+const baseHue = 182;
 const rangeHue = 40;
 const baseTTL = 50;
-const rangeTTL = 100;
+const rangeTTL = 50;
 // const noiseStrength = 100;
-const noiseStrength = 150;
+const noiseStrength = 120;
 const xOff = 0.0015;
 const yOff = 0.0015;
 const zOff = 0.0015;
-const backgroundColor = "hsla(220,60%,3%,1)";
+const backgroundColor = "hsla(220,44%,12%,0.8)";
 
 let container;
 let canvas;
@@ -115,8 +115,10 @@ function initRay(i) {
 
   length = baseLength + rand(rangeLength);
   x = rand(canvas.a.width);
-  y1 = center[1] + noiseStrength;
-  y2 = center[1] + noiseStrength - length;
+  // y1 = center[1] + noiseStrength;
+  // y2 = center[1] + noiseStrength - length;
+  y1 = center[1] + noiseStrength - length;
+  y2 = center[1] + noiseStrength - length * 2;
   n = simplex.noise3D(x * xOff, y1 * yOff, tick * zOff) * noiseStrength;
   y1 += n;
   y2 += n;
@@ -188,7 +190,7 @@ function drawRay(x, y1, y2, life, ttl, width, hue) {
   ctx.a.lineTo(x, y2);
   ctx.a.stroke();
   ctx.a.closePath();
-  // ctx.a.restore();
+  ctx.a.restore();
 }
 
 function checkBounds(x) {

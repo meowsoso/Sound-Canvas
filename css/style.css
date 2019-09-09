@@ -11,6 +11,19 @@ body {
   height: 100vh;
 } */
 
+div.riverNight {
+  position: absolute;
+  background: url("../img/2048px-Starry_Night_Over_the_Rhone.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  left: 0;
+  top: 0;
+  min-width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  opacity: 0.6;
+}
+
 #bgCover {
   display: flex;
   margin: 0 auto;
