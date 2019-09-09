@@ -3,7 +3,6 @@
 ////////// P5 ///////////
 
 // TODO: put in util
-
 let song;
 let button;
 let amp;
@@ -12,6 +11,9 @@ let compressor;
 let currentTime;
 let fft;
 let spectrum;
+
+// TODO: put in object  For shooting stars
+let stars = [];
 
 function toggleSong() {
   if (song.isPlaying()) {
@@ -30,7 +32,28 @@ function setup() {
   createNewCanvas();
   resize();
   initRays();
-  createCanvas(200, 200);
+
+  createCanvas(window.innerWidth, window.innerHeight);
+  // add stars to array
+  for (let i = 0; i < 10; i++) {
+    stars.push({
+      beginX: 0,
+      beginY: 0,
+      endX: 0,
+      endY: 0,
+      distX: 0,
+      distY: 0,
+      exponent: 2,
+      currentX: 0.0,
+      currentY: 0.0,
+      step: 0.02,
+      pct: 0,
+      color: "rgba(255, 255, 255, 0)",
+      moving: false,
+      history: []
+    });
+  }
+
   button = createButton("toggle");
   button.mousePressed(toggleSong);
 
@@ -48,17 +71,77 @@ function isChange(volLevel) {
   return Math.abs(volLevel - vol) / vol > 0.3;
 }
 
+// trigger shooting star
+function shootStar() {
+  let selectedStar;
+  for (let i = 0; i < stars.length; i++) {
+    if (!stars[i].moving) {
+      console.log("width", width, "height", height);
+      selectedStar = stars[i];
+      selectedStar.moving = true;
+      selectedStar.pct = 0.0;
+      selectedStar.beginX = random(width * 0.5, width);
+      selectedStar.beginY = random(0, height * 0.2);
+      selectedStar.currentX = selectedStar.beginX;
+      selectedStar.currentY = selectedStar.beginY;
+      selectedStar.endX = random(0, width * 0.3);
+      selectedStar.endY = random(height * 0.6, height * 0.9);
+      selectedStar.distX = selectedStar.endX - selectedStar.beginX;
+      selectedStar.distY = selectedStar.endY - selectedStar.beginY;
+      selectedStar.color = `rgba(${int(random(255))},${int(random(255))},${int(
+        random(255)
+      )}, 1 )`;
+      console.log("selected");
+      break;
+    }
+  }
+}
+
+function starAnimation() {
+  for (let i = 0; i < stars.length; i++) {
+    if (stars[i].currentY >= height * 0.5) {
+      fill("rgba(255, 255, 255, 0)");
+      ellipse(stars[i].currentX, stars[i].currentY, 10, 10);
+      stars[i].moving = false;
+    }
+    if (stars[i].moving === true) {
+      console.log("shooting");
+      let star = stars[i];
+      star.pct += star.step;
+      let vector = createVector(star.currentX, star.currentY);
+      star.history.push(vector);
+      if (star.history.length > 8) {
+        star.history.splice(0, 1);
+      }
+
+      if (star.pct < 1.0) {
+        star.currentX = star.beginX + star.pct * star.distX;
+        star.currentY = star.beginY + pow(star.pct, star.exponent) * star.distY;
+      }
+      fill(star.color);
+      ellipse(star.currentX, star.currentY, 10, 10);
+      for (let i = 0; i < star.history.length; i++) {
+        let pos = star.history[i];
+        fill(200);
+        ellipse(pos.x, pos.y, i, i);
+      }
+    }
+  }
+}
+
 function draw() {
-  currentTime = song.currentTime();
+  // currentTime = song.currentTime();
   //   let volLevel = amp.getLevel();
   //   // trigger if there is change in vol
   //   if (isChange(volLevel)) {
   //     rayCount = map(vol, 0, 1, 0, rayCount);
   //     vol = volLevel;
   //   }
-  spectrum = fft.analyze();
-
-  drawing();
+  // spectrum = fft.analyze();
+  // drawing();
+  clear();
+  shootStar();
+  starAnimation();
 }
 
 //////// aurora animation //////////
