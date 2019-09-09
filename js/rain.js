@@ -83,7 +83,7 @@ function draw() {
 
   // console.log(volLevel);
   if (isChange(volLevel)) {
-    nDrops = map(vol, 0, 1, 0, 1000);
+    nDrops = map(vol, 0, 1, 0, nDrops);
     vol = volLevel;
   }
   //   console.log(vol);
