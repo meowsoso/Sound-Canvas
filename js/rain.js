@@ -10,6 +10,24 @@ let currentTime;
 // let width = window.innerWidth;
 // let height = window.innerHeight;
 
+//////// Testing Tone.JS
+
+// let player = new Tone.Player("../audio/Helios - Nothing It Can.mp3").toMaster();
+
+// let analyser = player.createAnalyser();
+// analyser.fftSize = 2048;
+// let bufferLength = analyser.frequencyBinCount;
+// let dataArray = new Uint8Array(bufferLength);
+// analyser.getByteTimeDomainData(dataArray);
+
+// let fft = new Tone.FFT(1024);
+// player.connect(fft);
+// fft.toMaster();
+// //play as soon as the buffer is loaded
+// player.autostart = true;
+
+/////////////
+
 function toggleSong() {
   if (song.isPlaying()) {
     song.pause();
@@ -25,39 +43,45 @@ function preload() {
 }
 
 function setup() {
-  frameRate(60);
+  frameRate(30);
   createCanvas(window.innerWidth, window.innerHeight);
-
   button = createButton("toggle");
   button.mousePressed(toggleSong);
-
   // play music and get amp
   amp = new p5.Amplitude();
   compressor = new p5.Compressor();
   song.disconnect();
   compressor.process(song);
-  // add rain lines
   song.play();
+
+  // add rain lines
   for (i = 0; i < nDrops; i++) {
     drops.push(new Drop());
   }
 }
 
-// check if vol change more than 20%
+// check if vol change more than 30%
 function isChange(volLevel) {
   //   console.log(Math.abs(volLevel - vol) / vol);
   return Math.abs(volLevel - vol) / vol > 0.3;
 }
 
 function isRipple(volLevel, currentTime) {
-  return Math.abs(volLevel - vol) / vol > 0.8 && currentTime > 45;
+  return Math.abs(volLevel - vol) / vol > 0.6 && currentTime > 60;
 }
 
 function draw() {
   clear();
   currentTime = song.currentTime();
-  //   background(bg);
+
   let volLevel = amp.getLevel();
+
+  // trigger ripple
+  if (isRipple(volLevel, currentTime)) {
+    $("body").ripples("drop", random(width), random(height), 5, 0.2);
+  }
+
+  // console.log(volLevel);
   if (isChange(volLevel)) {
     nDrops = map(vol, 0, 1, 0, 1000);
     vol = volLevel;
@@ -66,14 +90,9 @@ function draw() {
   for (let i = 0; i < nDrops; i++) {
     drops[i].drawAndDrop();
   }
-
   // background fadeout
-  if (currentTime > 25) {
+  if (currentTime > 30) {
     drawDot(random(width), random(height));
-  }
-  // trigger ripple
-  if (isRipple(volLevel, currentTime)) {
-    $("body").ripples("drop", random(width), random(height), 5, 0.2);
   }
 }
 
@@ -98,8 +117,8 @@ function Drop() {
   };
 
   this.draw = function() {
-    stroke("rgba(28, 166, 154, 0.68)");
-    strokeWeight(3);
+    stroke("rgba(143, 219, 255, 0.8)");
+    strokeWeight(4);
     line(this.x, this.y, this.x, this.y + this.length);
   };
 
@@ -124,16 +143,14 @@ backgroundCover.style.width = window.innerWidth + "px";
 backgroundCover.style.height = window.innerHeight + "px";
 
 let bgCanvas = backgroundCover.getContext("2d"),
-  brushRadius = backgroundCover.width / 200;
+  brushRadius = backgroundCover.width / 150;
 bgCanvas.scale(2, 2);
-console.log(bgCanvas);
 
 img = new Image();
 img.src = "../img/woman_son.jpg";
 img.onload = function() {
   bgCanvas.imageSmoothingEnabled = false;
   bgCanvas.drawImage(img, 0, 0, window.innerWidth, window.innerHeight);
-  console.log(window.devicePixelRatio);
 };
 
 // make canvas disappear

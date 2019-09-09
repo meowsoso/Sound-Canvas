@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  console.log("run");
   try {
     $("body").ripples({
       resolution: 512,
