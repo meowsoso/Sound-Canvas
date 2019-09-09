@@ -1,6 +1,68 @@
 "use strict";
 
-let rayCount = 500;
+////////// P5 ///////////
+
+// TODO: put in util
+
+let song;
+let button;
+let amp;
+let vol = 0;
+let compressor;
+let currentTime;
+let fft;
+let spectrum;
+
+function toggleSong() {
+  if (song.isPlaying()) {
+    song.pause();
+  } else {
+    song.play();
+  }
+}
+
+function preload() {
+  song = loadSound("../audio/JoannaWang_Vincent.mp3");
+}
+
+function setup() {
+  frameRate(30);
+  createNewCanvas();
+  resize();
+  initRays();
+  createCanvas(200, 200);
+  button = createButton("toggle");
+  button.mousePressed(toggleSong);
+
+  amp = new p5.Amplitude();
+  compressor = new p5.Compressor();
+  song.disconnect();
+  compressor.process(song);
+  fft = new p5.FFT(0.8, 512);
+  song.play();
+}
+
+// check if vol change more than 30%
+function isChange(volLevel) {
+  //   console.log(Math.abs(volLevel - vol) / vol);
+  return Math.abs(volLevel - vol) / vol > 0.3;
+}
+
+function draw() {
+  currentTime = song.currentTime();
+  //   let volLevel = amp.getLevel();
+  //   // trigger if there is change in vol
+  //   if (isChange(volLevel)) {
+  //     rayCount = map(vol, 0, 1, 0, rayCount);
+  //     vol = volLevel;
+  //   }
+  spectrum = fft.analyze();
+
+  drawing();
+}
+
+//////// aurora animation //////////
+let rayCount = 512;
 const rayPropCount = 8;
 const rayPropsLength = rayCount * rayPropCount;
 const baseLength = 200;
@@ -9,9 +71,9 @@ const rangeLength = 200;
 const baseSpeed = 0.1;
 const rangeSpeed = 0.1;
 const baseWidth = 5;
-const rangeWidth = 20;
+const rangeWidth = 10;
 const baseHue = 180;
-const rangeHue = 60;
+const rangeHue = 40;
 const baseTTL = 50;
 const rangeTTL = 100;
 // const noiseStrength = 100;
@@ -29,12 +91,12 @@ let tick;
 let simplex;
 let rayProps;
 
-function setup() {
-  createNewCanvas();
-  resize();
-  initRays();
-  draw();
-}
+// function setupAurora() {
+//   createNewCanvas();
+//   resize();
+//   initRays();
+//   // draw();
+// }
 
 function initRays() {
   tick = 0;
@@ -83,7 +145,12 @@ function updateRay(i) {
     i6 = 5 + i,
     i7 = 6 + i,
     i8 = 7 + i;
+  // value 0-255
   let x, y1, y2, life, ttl, width, speed, hue;
+  let fftValue = spectrum[i / 8];
+  if (fftValue) {
+    fftValue = map(fftValue, 0, 255, 0, 360);
+  }
 
   x = rayProps[i];
   y1 = rayProps[i2];
@@ -92,7 +159,7 @@ function updateRay(i) {
   ttl = rayProps[i5];
   width = rayProps[i6];
   speed = rayProps[i7];
-  hue = rayProps[i8];
+  hue = fftValue || rayProps[i8];
 
   drawRay(x, y1, y2, life, ttl, width, hue);
 
@@ -121,7 +188,7 @@ function drawRay(x, y1, y2, life, ttl, width, hue) {
   ctx.a.lineTo(x, y2);
   ctx.a.stroke();
   ctx.a.closePath();
-  ctx.a.restore();
+  // ctx.a.restore();
 }
 
 function checkBounds(x) {
@@ -174,7 +241,7 @@ function render() {
   ctx.b.restore();
 }
 
-function draw() {
+const drawing = function() {
   tick++;
   ctx.a.clearRect(0, 0, canvas.a.width, canvas.a.height);
   ctx.b.fillStyle = backgroundColor;
@@ -182,8 +249,8 @@ function draw() {
   drawRays();
   render();
 
-  window.requestAnimationFrame(draw);
-}
+  // window.requestAnimationFrame(draw);
+};
 
-window.addEventListener("load", setup);
-window.addEventListener("resize", resize);
+// window.addEventListener("load", setup);
+// window.addEventListener("resize", resize);
