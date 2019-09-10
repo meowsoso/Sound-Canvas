@@ -85,10 +85,11 @@ function draw() {
   // }
   // starAnimation();
   spectrum = fft.analyze();
-  // if (currentTime < 5) {
-  // drawAurora();
-  drawSwirl();
-  // }
+  if (currentTime < 5) {
+    drawAurora();
+  } else {
+    drawSwirl();
+  }
 }
 
 // check if vol change more than 30%
