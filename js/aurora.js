@@ -33,7 +33,10 @@ function setup() {
   resize();
   initRays();
 
-  createCanvas(window.innerWidth, window.innerHeight);
+  let p5Canvas = createCanvas(window.innerWidth, window.innerHeight);
+  p5Canvas.id("fallingStar");
+  p5Canvas.style("z-index", "9999");
+  p5Canvas.style("visibility", "visible");
   // add stars to array
   for (let i = 0; i < 10; i++) {
     stars.push({
@@ -57,7 +60,7 @@ function setup() {
   button = createButton("toggle");
   button.mousePressed(toggleSong);
 
-  amp = new p5.Amplitude();
+  amp = new p5.Amplitude(0.8);
   compressor = new p5.Compressor();
   song.disconnect();
   compressor.process(song);
@@ -65,18 +68,42 @@ function setup() {
   song.play();
 }
 
+function draw() {
+  currentTime = song.currentTime();
+  let volLevel = amp.getLevel();
+  //   // trigger if there is change in vol
+  //   if (isChange(volLevel)) {
+  //     rayCount = map(vol, 0, 1, 0, rayCount);
+  //     vol = volLevel;
+  //   }
+
+  clear();
+  if (isChange(volLevel) && currentTime > 5) {
+    shootStar();
+    console.log(volLevel);
+    vol = volLevel;
+  }
+  starAnimation();
+  spectrum = fft.analyze();
+
+  if (currentTime < 5) {
+    drawing();
+  } else {
+    $("div.content--canvas").empty();
+  }
+}
+
 // check if vol change more than 30%
 function isChange(volLevel) {
   //   console.log(Math.abs(volLevel - vol) / vol);
-  return Math.abs(volLevel - vol) / vol > 0.3;
+  return Math.abs(volLevel - vol) / vol > 0.7;
 }
 
-// trigger shooting star
+////////// trigger shooting star
 function shootStar() {
   let selectedStar;
   for (let i = 0; i < stars.length; i++) {
     if (!stars[i].moving) {
-      console.log("width", width, "height", height);
       selectedStar = stars[i];
       selectedStar.moving = true;
       selectedStar.pct = 0.0;
@@ -91,6 +118,7 @@ function shootStar() {
       selectedStar.color = `rgba(${int(random(255))},${int(random(255))},${int(
         random(255)
       )}, 1 )`;
+      selectedStar.history = [];
       console.log("selected");
       break;
     }
@@ -100,8 +128,6 @@ function shootStar() {
 function starAnimation() {
   for (let i = 0; i < stars.length; i++) {
     if (stars[i].currentY >= height * 0.5) {
-      fill("rgba(255, 255, 255, 0)");
-      ellipse(stars[i].currentX, stars[i].currentY, 10, 10);
       stars[i].moving = false;
     }
     if (stars[i].moving === true) {
@@ -120,28 +146,19 @@ function starAnimation() {
       }
       fill(star.color);
       ellipse(star.currentX, star.currentY, 10, 10);
+
+      // draw trail
+      noFill();
+      beginShape();
+      stroke(star.color);
+      strokeWeight(3);
       for (let i = 0; i < star.history.length; i++) {
         let pos = star.history[i];
-        fill(200);
-        ellipse(pos.x, pos.y, i, i);
+        vertex(pos.x, pos.y);
       }
+      endShape();
     }
   }
-}
-
-function draw() {
-  // currentTime = song.currentTime();
-  //   let volLevel = amp.getLevel();
-  //   // trigger if there is change in vol
-  //   if (isChange(volLevel)) {
-  //     rayCount = map(vol, 0, 1, 0, rayCount);
-  //     vol = volLevel;
-  //   }
-  // spectrum = fft.analyze();
-  // drawing();
-  clear();
-  shootStar();
-  starAnimation();
 }
 
 //////// aurora animation //////////
@@ -174,13 +191,6 @@ let tick;
 let simplex;
 let rayProps;
 
-// function setupAurora() {
-//   createNewCanvas();
-//   resize();
-//   initRays();
-//   // draw();
-// }
-
 function initRays() {
   tick = 0;
   simplex = new SimplexNoise();
@@ -198,8 +208,6 @@ function initRay(i) {
 
   length = baseLength + rand(rangeLength);
   x = rand(canvas.a.width);
-  // y1 = center[1] + noiseStrength;
-  // y2 = center[1] + noiseStrength - length;
   y1 = center[1] + noiseStrength - length;
   y2 = center[1] + noiseStrength - length * 2;
   n = simplex.noise3D(x * xOff, y1 * yOff, tick * zOff) * noiseStrength;
@@ -320,7 +328,7 @@ function resize() {
 
 function render() {
   ctx.b.save();
-  ctx.b.filter = "blur(12px)";
+  ctx.b.filter = "blur(10px)";
   ctx.a.globalCompositeOperation = "lighter";
   ctx.b.drawImage(canvas.a, 0, 0);
   ctx.b.restore();

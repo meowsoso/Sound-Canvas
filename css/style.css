@@ -2,18 +2,20 @@
   margin: 0;
   padding: 0;
 }
-/* 
-body {
+
+div#lilyPond {
+  position: absolute;
   background: url("../img/Waterlilies.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   min-width: 100vw;
   height: 100vh;
-} */
+  top: 0;
+  left: 0;
+}
 
 div.riverNight {
   position: absolute;
-  background-color: linear-gradient(transparent, pink);
   background: url("../img/2048px-Starry_Night_Over_the_Rhone.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -21,9 +23,12 @@ div.riverNight {
   top: 0;
   min-width: 100vw;
   height: 100vh;
-  /* z-index: 3; */
-  /* opacity: 0.5; */
+  z-index: 2;
 }
+
+/* canvas#fallingStar {
+  z-index: 5;
+} */
 
 #bgCover {
   display: flex;

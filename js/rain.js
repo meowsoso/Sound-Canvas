@@ -63,6 +63,7 @@ function setup() {
 // check if vol change more than 30%
 function isChange(volLevel) {
   //   console.log(Math.abs(volLevel - vol) / vol);
+
   return Math.abs(volLevel - vol) / vol > 0.3;
 }
 
@@ -75,7 +76,6 @@ function draw() {
   currentTime = song.currentTime();
 
   let volLevel = amp.getLevel();
-
   // trigger ripple
   if (isRipple(volLevel, currentTime)) {
     $("body").ripples("drop", random(width), random(height), 5, 0.2);
@@ -83,7 +83,8 @@ function draw() {
 
   // console.log(volLevel);
   if (isChange(volLevel)) {
-    nDrops = map(vol, 0, 1, 0, nDrops);
+    console.log("change");
+    nDrops = map(vol, 0, 1, 0, 1000);
     vol = volLevel;
   }
   //   console.log(vol);
@@ -117,7 +118,7 @@ function Drop() {
   };
 
   this.draw = function() {
-    stroke("rgba(143, 219, 255, 0.8)");
+    stroke("rgba(143, 219, 255, 0.4)");
     strokeWeight(4);
     line(this.x, this.y, this.x, this.y + this.length);
   };
@@ -143,7 +144,8 @@ backgroundCover.style.width = window.innerWidth + "px";
 backgroundCover.style.height = window.innerHeight + "px";
 
 let bgCanvas = backgroundCover.getContext("2d"),
-  brushRadius = backgroundCover.width / 150;
+  brushRadius;
+backgroundCover.width / (Math.floor(Math.random() * (+160 - +140)) + +140);
 bgCanvas.scale(2, 2);
 
 img = new Image();
@@ -155,6 +157,8 @@ img.onload = function() {
 
 // make canvas disappear
 function drawDot(mouseX, mouseY) {
+  brushRadius =
+    backgroundCover.width / (Math.floor(Math.random() * (+170 - +130)) + +140);
   bgCanvas.beginPath();
   bgCanvas.arc(mouseX, mouseY, brushRadius, 0, 2 * Math.PI, true);
   bgCanvas.fillStyle = "#000";
