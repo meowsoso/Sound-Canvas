@@ -47,7 +47,7 @@ function preload() {
 }
 
 function setup() {
-  frameRate(30);
+  frameRate(60);
   createNewCanvas();
   resize();
   initRays();
@@ -78,14 +78,13 @@ function draw() {
   let volLevel = amp.getLevel();
 
   // clear();
-  // if (isChange(volLevel) && currentTime > 5) {
-  //   shootStar();
-  //   console.log(volLevel);
-  //   vol = volLevel;
-  // }
-  // starAnimation();
+  if (isChange(volLevel) && currentTime > 5) {
+    shootStar();
+    vol = volLevel;
+  }
+
   spectrum = fft.analyze();
-  if (currentTime < 5) {
+  if (currentTime < 50) {
     drawAurora();
   } else {
     drawSwirl();
@@ -95,7 +94,7 @@ function draw() {
 // check if vol change more than 30%
 function isChange(volLevel) {
   //   console.log(Math.abs(volLevel - vol) / vol);
-  return Math.abs(volLevel - vol) / vol > 0.7;
+  return Math.abs(volLevel - vol) / vol > 0.65;
 }
 
 // init stars
@@ -127,12 +126,12 @@ function shootStar() {
       selectedStar = stars[i];
       selectedStar.moving = true;
       selectedStar.pct = 0.0;
-      selectedStar.beginX = random(width * 0.5, width);
+      selectedStar.beginX = random(width * 0.6, width);
       selectedStar.beginY = random(0, height * 0.2);
       selectedStar.currentX = selectedStar.beginX;
       selectedStar.currentY = selectedStar.beginY;
       selectedStar.endX = random(0, width * 0.3);
-      selectedStar.endY = random(height * 0.6, height * 0.9);
+      selectedStar.endY = random(height * 0.75, height * 0.9);
       selectedStar.distX = selectedStar.endX - selectedStar.beginX;
       selectedStar.distY = selectedStar.endY - selectedStar.beginY;
       selectedStar.color = `rgba(${int(random(255))},${int(random(255))},${int(
@@ -146,7 +145,7 @@ function shootStar() {
 
 function starAnimation() {
   for (let i = 0; i < stars.length; i++) {
-    if (stars[i].currentY >= height * 0.5) {
+    if (stars[i].currentY >= height * 0.7) {
       stars[i].moving = false;
     }
     if (stars[i].moving === true) {
@@ -154,7 +153,7 @@ function starAnimation() {
       star.pct += star.step;
       let vector = createVector(star.currentX, star.currentY);
       star.history.push(vector);
-      if (star.history.length > 8) {
+      if (star.history.length > 10) {
         star.history.splice(0, 1);
       }
 
@@ -162,19 +161,31 @@ function starAnimation() {
         star.currentX = star.beginX + star.pct * star.distX;
         star.currentY = star.beginY + pow(star.pct, star.exponent) * star.distY;
       }
-      fill(star.color);
-      ellipse(star.currentX, star.currentY, 10, 10);
+      // fill(star.color);
+      // ellipse(star.currentX, star.currentY, 10, 10);
 
       // draw trail
-      noFill();
-      beginShape();
-      stroke(star.color);
-      strokeWeight(3);
+      // noFill();
+      // beginShape();
+      // stroke(star.color);
+      // strokeWeight(3);
+      // for (let i = 0; i < star.history.length; i++) {
+      //   let pos = star.history[i];
+      //   vertex(pos.x, pos.y);
+      // }
+      // endShape();
+      ctx.a.save();
+      ctx.a.beginPath();
+      ctx.a.strokeStyle = star.color;
+      ctx.a.moveTo(star.currentX, star.currentY);
+      ctx.a.lineWidth = 3;
       for (let i = 0; i < star.history.length; i++) {
         let pos = star.history[i];
-        vertex(pos.x, pos.y);
+        ctx.a.lineTo(pos.x, pos.y);
       }
-      endShape();
+      ctx.a.stroke();
+      ctx.a.closePath();
+      ctx.a.restore();
     }
   }
 }
@@ -370,6 +381,7 @@ const drawAurora = function() {
   ctx.b.fillStyle = backgroundColor;
   ctx.b.fillRect(0, 0, canvas.b.width, canvas.a.height);
   drawRays();
+  starAnimation();
   render();
 };
 
@@ -502,6 +514,7 @@ function drawSwirl() {
   ctx.b.fillRect(0, 0, canvas.a.width, canvas.a.height);
 
   drawParticles();
+  starAnimation();
   renderSwirlGlow();
   renderSwirlScreen();
 }
