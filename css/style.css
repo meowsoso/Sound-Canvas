@@ -26,6 +26,18 @@ div.riverNight {
   z-index: 2;
 }
 
+div.starryNight {
+  position: absolute;
+  background: url("../img/2048px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  left: 0;
+  top: 0;
+  min-width: 100vw;
+  height: 100vh;
+  z-index: 2;
+}
+
 /* canvas#fallingStar {
   z-index: 5;
 } */
