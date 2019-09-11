@@ -15,9 +15,9 @@ let spectrum;
 let stars = [];
 
 const swirlParams = {
-  particleCount: 1400,
+  particleCount: 1024,
   particlePropCount: 9,
-  particlePropsLength: 12600,
+  particlePropsLength: 9216,
   rangeY: 100,
   baseTTL: 100,
   rangeTTL: 100,
@@ -47,7 +47,7 @@ function preload() {
 }
 
 function setup() {
-  frameRate(60);
+  frameRate(30);
   createNewCanvas();
   resize();
   initRays();
@@ -78,15 +78,15 @@ function draw() {
   let volLevel = amp.getLevel();
 
   // clear();
-  if (isChange(volLevel) && currentTime > 5) {
-    shootStar();
-    vol = volLevel;
-  }
 
   spectrum = fft.analyze();
-  if (currentTime < 50) {
+  if (currentTime < 100) {
     drawAurora();
   } else {
+    if (isChange(volLevel) && currentTime > 146) {
+      shootStar();
+      vol = volLevel;
+    }
     drawSwirl();
   }
 }
@@ -110,7 +110,7 @@ function initStars() {
       exponent: 2,
       currentX: 0.0,
       currentY: 0.0,
-      step: 0.02,
+      step: 0.03,
       pct: 0,
       color: "rgba(255, 255, 255, 0)",
       moving: false,
@@ -153,7 +153,7 @@ function starAnimation() {
       star.pct += star.step;
       let vector = createVector(star.currentX, star.currentY);
       star.history.push(vector);
-      if (star.history.length > 10) {
+      if (star.history.length > 2) {
         star.history.splice(0, 1);
       }
 
@@ -281,10 +281,8 @@ function updateRay(i) {
     i8 = 7 + i;
   // value 0-255
   let x, y1, y2, life, ttl, width, speed, hue;
+
   let fftValue = spectrum[i / 8];
-  if (fftValue) {
-    fftValue = map(fftValue, 0, 255, 0, 360);
-  }
 
   x = rayProps[i];
   y1 = rayProps[i2];
@@ -293,9 +291,13 @@ function updateRay(i) {
   ttl = rayProps[i5];
   width = rayProps[i6];
   speed = rayProps[i7];
-  hue = fftValue || rayProps[i8];
-
-  drawRay(x, y1, y2, life, ttl, width, hue);
+  // get color with fft
+  if (fftValue > 100) {
+    fftValue -= 100;
+    fftValue = map(fftValue, 0, 155, 0, 360);
+    hue = fftValue || rayProps[i8];
+    drawRay(x, y1, y2, life, ttl, width, hue);
+  }
 
   x += speed;
   life++;
@@ -381,7 +383,7 @@ const drawAurora = function() {
   ctx.b.fillStyle = backgroundColor;
   ctx.b.fillRect(0, 0, canvas.b.width, canvas.a.height);
   drawRays();
-  starAnimation();
+  // starAnimation();
   render();
 };
 
@@ -438,6 +440,12 @@ function updateParticle(i) {
     i9 = 8 + i;
   let n, x, y, vx, vy, life, ttl, speed, x2, y2, radius, hue;
 
+  let index = Math.floor(i / 9 / 2);
+  let fftValue = spectrum[index];
+  if (fftValue) {
+    fftValue = map(fftValue, 0, 255, 0, 360);
+  }
+
   x = particleProps[i];
   y = particleProps[i2];
   n =
@@ -456,7 +464,8 @@ function updateParticle(i) {
   x2 = x + vx * speed;
   y2 = y + vy * speed;
   radius = particleProps[i8];
-  hue = particleProps[i9];
+  // hue = particleProps[i9];
+  hue = fftValue || particleProps[i9];
 
   drawParticle(x, y, x2, y2, life, ttl, radius, hue);
 
