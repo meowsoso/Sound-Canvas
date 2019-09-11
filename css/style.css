@@ -57,3 +57,35 @@ div.starryNight {
   left: 0;
   top: 0;
 }
+
+div.container {
+  max-width: 960px;
+  height: 100vh;
+}
+
+div.portraitMonet {
+  background: url("/img/Claude_Monet_portrait.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flexbox;
+  position: absolute;
+  min-width: 25vw;
+  height: 50vh;
+  left: 10vw;
+  top: 20vh;
+  z-index: 3;
+}
+
+div.monetBackground {
+  display: flex;
+  background: url("/img/Monet_Houses_of_Parliament_Sunset.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  min-width: 80vw;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  padding: 3em;
+  margin: 3em;
+}

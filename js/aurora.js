@@ -79,7 +79,7 @@ function draw() {
   let volLevel = amp.getLevel();
 
   // clear();
-  if (currentTime > 950) {
+  if (currentTime > 95) {
     $("div.riverNight").fadeOut(10000);
     $("div.starryNight").fadeIn(13000);
   }
