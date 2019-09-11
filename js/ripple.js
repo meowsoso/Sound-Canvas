@@ -1,6 +1,6 @@
 $(document).ready(function() {
   try {
-    $("body").ripples({
+    $("div#lilyPond").ripples({
       resolution: 512,
       dropRadius: 20,
       perturbance: 0.03,

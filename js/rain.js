@@ -78,7 +78,7 @@ function draw() {
   let volLevel = amp.getLevel();
   // trigger ripple
   if (isRipple(volLevel, currentTime)) {
-    $("body").ripples("drop", random(width), random(height), 5, 0.2);
+    $("div#lilyPond").ripples("drop", random(width), random(height), 5, 0.2);
   }
 
   // console.log(volLevel);

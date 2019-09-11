@@ -23,7 +23,7 @@ div.riverNight {
   top: 0;
   min-width: 100vw;
   height: 100vh;
-  z-index: 2;
+  z-index: 3;
 }
 
 div.starryNight {

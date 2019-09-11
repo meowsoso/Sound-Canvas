@@ -3,6 +3,7 @@
 ////////// P5 ///////////
 
 // TODO: put in util
+$("div.starryNight").hide();
 let song;
 let button;
 let amp;
@@ -78,9 +79,13 @@ function draw() {
   let volLevel = amp.getLevel();
 
   // clear();
+  if (currentTime > 950) {
+    $("div.riverNight").fadeOut(10000);
+    $("div.starryNight").fadeIn(13000);
+  }
 
   spectrum = fft.analyze();
-  if (currentTime < 100) {
+  if (currentTime < 105) {
     drawAurora();
   } else {
     if (isChange(volLevel) && currentTime > 146) {
