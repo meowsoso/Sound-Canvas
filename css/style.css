@@ -89,3 +89,28 @@ div.monetBackground {
   padding: 3em;
   margin: 3em;
 }
+
+div.pedal {
+  /* transition: 3s; */
+  background: url("/img/red_flower.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 40vw;
+  top: 60vh;
+  z-index: 5;
+}
+
+div.pedal2 {
+  background: url("/img/blue_flower.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 50vw;
+  top: 30vh;
+  z-index: 5;
+}
