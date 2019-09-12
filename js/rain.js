@@ -12,30 +12,7 @@ let canvasWidth = window.innerWidth *0.5;
 let canvasHeight = window.innerHeight *0.8;
 $('div.pedal').hide()
 $('div.pedal2').hide()
-
-
-
-
-// let width = window.innerWidth;
-// let height = window.innerHeight;
-
-//////// Testing Tone.JS
-
-// let player = new Tone.Player("../audio/Helios - Nothing It Can.mp3").toMaster();
-
-// let analyser = player.createAnalyser();
-// analyser.fftSize = 2048;
-// let bufferLength = analyser.frequencyBinCount;
-// let dataArray = new Uint8Array(bufferLength);
-// analyser.getByteTimeDomainData(dataArray);
-
-// let fft = new Tone.FFT(1024);
-// player.connect(fft);
-// fft.toMaster();
-// //play as soon as the buffer is loaded
-// player.autostart = true;
-
-/////////////
+$('div.songInfo').hide()
 
 function toggleSong() {
   if (song.isPlaying()) {
@@ -43,6 +20,7 @@ function toggleSong() {
   } else {
     song.play();
     $('div#monet').fadeOut(5000);
+    $('div.songInfo').fadeIn(10000);
   }
 }
 
@@ -57,6 +35,8 @@ function setup() {
   p5Canvas.parent('lilyPond');
   p5Canvas.style('position', 'absolute');
   p5Canvas.style('top', '0');
+  p5Canvas.style('border', '5px solid rgba(34, 19, 2, 0.8)');
+  
   pondSize()
 
   button = createButton("toggle");
@@ -136,7 +116,10 @@ function isChange(volLevel) {
 
 
 function isRipple(volLevel, currentTime) {
-  return Math.abs(volLevel - vol) / vol > 0.4 && currentTime > 170;
+  if (currentTime > 240) {
+    return Math.abs(volLevel - vol) / vol > 0.6 
+  } else if (currentTime > 160)
+  return Math.abs(volLevel - vol) / vol > 0.32;
 }
 
 // draw lines as raindrops

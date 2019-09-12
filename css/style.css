@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing:border-box;
 }
 
 body {
@@ -86,6 +87,7 @@ div#lilyPond {
   background: url("../img/Waterlilies.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  border: 5px solid rgba(34, 19, 2, 0.8);
   /* top: 0;
   left: 0; */
 }
@@ -95,6 +97,7 @@ div#garden {
   background: url("../img/2048px-Claude_Monet_-_Poppy_Field_-_Google_Art_Project.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  border: 5px solid rgba(34, 19, 2, 0.8);
   top: 0;
   left: 0;
   height: 100%;
@@ -106,6 +109,7 @@ div#monet {
   background: url("../img/Claude_Monet_portrait.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  border: 5px solid rgba(34, 19, 2, 0.8);
   top: 0;
   left: 0;
   height: 100%;
@@ -146,3 +150,10 @@ div.pedal2 {
   height: 100vh; */
 }
 
+div.songInfo {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  height: 2em;
+  width: 10em;
+}
