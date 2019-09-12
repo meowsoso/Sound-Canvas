@@ -4,7 +4,10 @@
   box-sizing:border-box;
 }
 
+
 body {
+}
+div.container {
   background: url('/img/memphis-mini.png');
   background-repeat: repeat;
   margin: 0;
@@ -16,6 +19,30 @@ body {
 
   /* This centers our sketch vertically. */
   align-items: center;
+  min-width: 980px;
+  height: 100vh;
+}
+
+div.container.dark {
+  background: url('/img/tactile_noise_@2X.png');
+  background-repeat: repeat;
+
+}
+
+div#frame {
+  position: relative;
+  /* background: url("../img/Waterlilies.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; */
+
+  /* border: 10px solid #0892d0; */
+  box-shadow: 8px 8px 11px 3px rgb(32, 24, 32)
+}
+
+div.content--canvas {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 div.riverNight {
@@ -25,8 +52,8 @@ div.riverNight {
   background-repeat: no-repeat;
   left: 0;
   top: 0;
-  min-width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 3;
 }
 
@@ -37,8 +64,8 @@ div.starryNight {
   background-repeat: no-repeat;
   left: 0;
   top: 0;
-  min-width: 100vw;
-  height: 100vh;
+  min-width: 100%;
+  height: 100%;
   z-index: 2;
 }
 
@@ -48,10 +75,7 @@ div.starryNight {
 
 
 
-div.container {
-  max-width: 960px;
-  height: 100vh;
-}
+
 
 div.portraitMonet {
   background: url("/img/Claude_Monet_portrait.jpg");
@@ -88,8 +112,6 @@ div#lilyPond {
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
-  /* top: 0;
-  left: 0; */
 }
 
 div#garden {
@@ -152,8 +174,57 @@ div.pedal2 {
 
 div.songInfo {
   position: absolute;
-  top: 5%;
+  top: 3%;
   right: 2%;
   height: 2em;
   width: 10em;
+}
+div.songInfo.vincent {
+  color: white;
+}
+
+button {
+	-moz-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	-webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:11px 23px;
+	text-decoration:none;
+  text-shadow:0px -1px 0px #2b665e;
+  position: absolute;
+  bottom: 1vh;
+  left: 40%;
+}
+
+button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
+	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
+	background-color:#6c7c7c;
+}
+
+
+button.back {
+  left: 54%
 }

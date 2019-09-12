@@ -1,7 +1,5 @@
 "use strict";
 
-////////// P5 ///////////
-
 // TODO: put in util
 $("div.starryNight").hide();
 let song;
@@ -14,6 +12,10 @@ let fft;
 let spectrum;
 // TODO: put in object  For shooting stars
 let stars = [];
+let canvasWidth = window.innerWidth *0.85;
+let canvasHeight = window.innerHeight *0.8;
+
+
 
 const swirlParams = {
   particleCount: 1024,
@@ -49,21 +51,20 @@ function preload() {
 
 function setup() {
   frameRate(30);
-  createNewCanvas();
+  createNewCanvas();  
   resize();
   initRays();
   // set up swirl particle
   initParticles();
   // set up stars
   initStars();
-
-  let p5Canvas = createCanvas(window.innerWidth, window.innerHeight);
-  p5Canvas.id("fallingStar");
-  p5Canvas.style("z-index", "9999");
-  p5Canvas.style("visibility", "visible");
-  // add stars to array
-
-  button = createButton("toggle");
+  frameSize()
+  
+  const p5Canvas = createCanvas(canvasWidth, canvasHeight);
+  p5Canvas.parent('frame');
+  p5Canvas.style('position', 'absolute');
+  p5Canvas.style('top', '0');
+  button = createButton("Toggle");
   button.mousePressed(toggleSong);
 
   amp = new p5.Amplitude(0.8);
@@ -71,7 +72,6 @@ function setup() {
   song.disconnect();
   compressor.process(song);
   fft = new p5.FFT(0.8, 512);
-  song.play();
 }
 
 function draw() {
@@ -79,15 +79,15 @@ function draw() {
   let volLevel = amp.getLevel();
 
   // clear();
-  if (currentTime > 95) {
+  if (currentTime > 100) {
     $("div.riverNight").fadeOut(10000);
-    $("div.starryNight").fadeIn(13000);
+    $("div.starryNight").fadeIn(15000);
   }
 
   spectrum = fft.analyze();
-  if (currentTime < 105) {
+  if (currentTime < 110) {
     drawAurora();
-  } else {
+  } else if (currentTime > 110){
     if (isChange(volLevel) && currentTime > 146) {
       shootStar();
       vol = volLevel;
@@ -95,6 +95,12 @@ function draw() {
     drawSwirl();
   }
 }
+
+// adjust frame size 
+function frameSize() {
+  $('div#frame').css('width', canvasWidth+"px").css('height', canvasHeight, canvasHeight+"px").css('top', '0');
+}
+
 
 // check if vol change more than 30%
 function isChange(volLevel) {
@@ -166,19 +172,7 @@ function starAnimation() {
         star.currentX = star.beginX + star.pct * star.distX;
         star.currentY = star.beginY + pow(star.pct, star.exponent) * star.distY;
       }
-      // fill(star.color);
-      // ellipse(star.currentX, star.currentY, 10, 10);
 
-      // draw trail
-      // noFill();
-      // beginShape();
-      // stroke(star.color);
-      // strokeWeight(3);
-      // for (let i = 0; i < star.history.length; i++) {
-      //   let pos = star.history[i];
-      //   vertex(pos.x, pos.y);
-      // }
-      // endShape();
       ctx.a.save();
       ctx.a.beginPath();
       ctx.a.strokeStyle = star.color;
@@ -343,7 +337,7 @@ function createNewCanvas() {
     b: document.createElement("canvas")
   };
   canvas.b.style = `
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -358,7 +352,8 @@ function createNewCanvas() {
 }
 
 function resize() {
-  const { innerWidth, innerHeight } = window;
+  let innerWidth = window.innerWidth;
+  let innerHeight = window.innerHeight;
 
   canvas.a.width = innerWidth;
   canvas.a.height = innerHeight;

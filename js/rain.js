@@ -39,7 +39,7 @@ function setup() {
   
   pondSize()
 
-  button = createButton("toggle");
+  button = createButton("Toggle");
   button.mousePressed(toggleSong);
   // play music and get amp
   amp = new p5.Amplitude();
@@ -209,10 +209,10 @@ function getBrushPos(xRef, yRef) {
 // create new flower
 function createFlower(callback) {
   let flower;
-  if (random(0,1) > 0.5) {
+  if (random() > 0.5) {
     flower = "div.pedal2"
   } else {
-    flower = "div,pedal"
+    flower = "div.pedal"
   }
   $(flower).first()
       .clone()
