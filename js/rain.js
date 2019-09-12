@@ -174,7 +174,7 @@ backgroundCover.width / (Math.floor(Math.random() * (+160 - +140)) + +140);
 bgCanvas.scale(2, 2);
 
 img = new Image();
-img.src = "/img/claude_monet_woman_with_a_parasol.jpg";
+img.src = "./img/claude_monet_woman_with_a_parasol.jpg";
 img.onload = function() {
   bgCanvas.imageSmoothingEnabled = false;
   bgCanvas.drawImage(img, 0, 0, canvasWidth, canvasHeight);

@@ -13,7 +13,7 @@ body {
 
 
 div.container {
-  background: url('/img/memphis-mini.png');
+  background: url('../img/memphis-mini.png');
   background-repeat: repeat;
   margin: 0;
   display: flex;
@@ -29,7 +29,7 @@ div.container {
 }
 
 div.container.dark {
-  background: url('/img/tactile_noise.png');
+  background: url('../img/tactile_noise.png');
   background-repeat: repeat;
 
 }
@@ -62,7 +62,7 @@ div.content--canvas {
 
 div.riverNight {
   position: absolute;
-  background: url("/img/starry_night_over_the_rhone.png");
+  background: url("../img/starry_night_over_the_rhone.png");
   background-size: cover;
   background-repeat: no-repeat;
   left: 0;
@@ -74,7 +74,7 @@ div.riverNight {
 
 div.starryNight {
   position: absolute;
-  background: url("/img/van_gogh_starry_night.png");
+  background: url("../img/van_gogh_starry_night.png");
   background-size: cover;
   background-repeat: no-repeat;
   left: 0;
@@ -86,7 +86,7 @@ div.starryNight {
 
 div.monetBackground {
   display: inline-block;
-  background: url("/img/monet_houses_of_parliament_sunset.jpg");
+  background: url("../img/monet_houses_of_parliament_sunset.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
@@ -100,7 +100,7 @@ div.monetBackground {
 
 div.vincentBackground {
   display: inline-block;
-  background: url("/img/vincent_van_gogh_the_prison_courtyard.jpg");
+  background: url("../img/vincent_van_gogh_the_prison_courtyard.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
@@ -117,7 +117,7 @@ div.vincentBackground {
 
 div#lilyPond {
   position: relative;
-  background: url("/img/water_lilies.jpg");
+  background: url("../img/water_lilies.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -125,7 +125,7 @@ div#lilyPond {
 
 div#garden {
   position: absolute;
-  background: url("/img/claude_monet_poppy_field.jpg");
+  background: url("../img/claude_monet_poppy_field.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -137,7 +137,7 @@ div#garden {
 }
 div#monet {
   position: absolute;
-  background: url("/img/claude_monet_portrait.jpg");
+  background: url("../img/claude_monet_portrait.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -150,7 +150,7 @@ div#monet {
 
 div.pedal {
   /* transition: 3s; */
-  background: url("/img/red_flower.png");
+  background: url("../img/red_flower.png");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
@@ -162,7 +162,7 @@ div.pedal {
 }
 
 div.pedal2 {
-  background: url("/img/blue_flower.png");
+  background: url("../img/blue_flower.png");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
