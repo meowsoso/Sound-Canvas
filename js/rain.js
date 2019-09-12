@@ -25,7 +25,7 @@ function toggleSong() {
 }
 
 function preload() {
-  song = loadSound("/audio/helios-nothing_it_can.mp3");
+  song = loadSound("./audio/helios-nothing_it_can.mp3");
 
 }
 
