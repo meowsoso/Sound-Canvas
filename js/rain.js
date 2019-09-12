@@ -8,8 +8,14 @@ let vol = 0;
 let compressor;
 let currentTime;
 let flowerReady = true
+let canvasWidth = window.innerWidth *0.5;
+let canvasHeight = window.innerHeight *0.8;
 $('div.pedal').hide()
 $('div.pedal2').hide()
+
+
+
+
 // let width = window.innerWidth;
 // let height = window.innerHeight;
 
@@ -36,18 +42,23 @@ function toggleSong() {
     song.pause();
   } else {
     song.play();
+    $('div#monet').fadeOut(5000);
   }
 }
 
 function preload() {
   song = loadSound("../audio/Helios - Nothing It Can.mp3");
-  // bg = loadImage("../img/Water_Lilies.jpg");
-  //   img = loadImage("http://placekitten.com/960/924");
+
 }
 
 function setup() {
   frameRate(30);
-  createCanvas(window.innerWidth, window.innerHeight);
+  const p5Canvas = createCanvas(canvasWidth, canvasHeight);
+  p5Canvas.parent('lilyPond');
+  p5Canvas.style('position', 'absolute');
+  p5Canvas.style('top', '0');
+  pondSize()
+
   button = createButton("toggle");
   button.mousePressed(toggleSong);
   // play music and get amp
@@ -55,7 +66,6 @@ function setup() {
   compressor = new p5.Compressor();
   song.disconnect();
   compressor.process(song);
-  song.play();
 
   // add rain lines
   for (i = 0; i < nDrops; i++) {
@@ -66,52 +76,67 @@ function setup() {
 function draw() {
   clear();
   currentTime = song.currentTime();
-
   let volLevel = amp.getLevel();
 
-
-
+  // trigger ripple
+  if (isRipple(volLevel, currentTime)) {
+    $("div#lilyPond").ripples("drop", random(width), random(height), 5, 0.2);
+  }
   // trigger flower effect
-  if (flowerReady === true && currentTime > 30) {
-    $('div.pedal').fadeIn(3000);
+  if (flowerReady === true && currentTime > 60) {
     flowerFly();
     flowerReady = false;
   }
-  // trigger ripple
-  // if (isRipple(volLevel, currentTime)) {
-  //   $("div#lilyPond").ripples("drop", random(width), random(height), 5, 0.2);
-  // }
-
-  console.log(volLevel);
-  if (isChange(volLevel)) {
-    console.log("change");
-    if (currentTime < 25) {
+ 
+// control flower and rain
+  if (isChange(volLevel) && currentTime < 270) {
+    if (currentTime > 75) {
+      nDrops = map(vol, 0, 1, 0, 1000);
+    } else if (currentTime > 23 && currentTime < 60 ) {
       createFlower(fadeInEffect);
-    }
-    // nDrops = map(vol, 0, 1, 0, 1000);
+    } 
     vol = volLevel;
   }
-  //   console.log(vol);
-  // for (let i = 0; i < nDrops; i++) {
-  //   drops[i].drawAndDrop();
-  // }
+  //   call rain;
+  if (currentTime > 78) {
+    for (let i = 0; i < nDrops; i++) {
+      drops[i].drawAndDrop();
+    }
+  }
   // background fadeout
-  // if (currentTime > 30) {
-  //   drawDot(random(width), random(height));
-  // }
+  if (currentTime > 100) {
+    drawDot(random(width), random(height));
+  }
+
+
+
+  if (currentTime > 70) {
+    $('div#garden').fadeOut(8000);
+  }
+
+  if (currentTime > 274) {
+    $('div#monet').fadeIn(6000);
+  }
+}
+
+
+
+// adjust lilypond size
+function pondSize() {
+  $('div.lilyPond').css('width', canvasWidth+"px").css('height', canvasHeight, canvasHeight+"px").css('top', '0');
 }
 
 // check if vol change more than 30%
 function isChange(volLevel) {
   //   console.log(Math.abs(volLevel - vol) / vol);
 
-  return Math.abs(volLevel - vol) / vol > 0.5;
+  return Math.abs(volLevel - vol) / vol > 0.35;
 }
 
 
 
 function isRipple(volLevel, currentTime) {
-  return Math.abs(volLevel - vol) / vol > 0.6 && currentTime > 60;
+  return Math.abs(volLevel - vol) / vol > 0.4 && currentTime > 170;
 }
 
 // draw lines as raindrops
@@ -155,10 +180,10 @@ function Drop() {
 /////////////////// background fadeout effect //////////////////
 
 let backgroundCover = document.getElementById("bgCover");
-backgroundCover.width = window.innerWidth * 2;
-backgroundCover.height = window.innerHeight * 2;
-backgroundCover.style.width = window.innerWidth + "px";
-backgroundCover.style.height = window.innerHeight + "px";
+backgroundCover.width = canvasWidth * 2;
+backgroundCover.height = canvasHeight * 2;
+backgroundCover.style.width = canvasWidth + "px";
+backgroundCover.style.height = canvasHeight + "px";
 
 let bgCanvas = backgroundCover.getContext("2d"),
   brushRadius;
@@ -166,16 +191,16 @@ backgroundCover.width / (Math.floor(Math.random() * (+160 - +140)) + +140);
 bgCanvas.scale(2, 2);
 
 img = new Image();
-img.src = "../img/woman_son.jpg";
+img.src = "../img/2048px-Claude_Monet_-_Woman_with_a_Parasol_-_Madame_Monet_and_Her_Son_-_Google_Art_Project.jpg";
 img.onload = function() {
   bgCanvas.imageSmoothingEnabled = false;
-  bgCanvas.drawImage(img, 0, 0, window.innerWidth, window.innerHeight);
+  bgCanvas.drawImage(img, 0, 0, canvasWidth, canvasHeight);
 };
 
 // make canvas disappear
 function drawDot(mouseX, mouseY) {
   brushRadius =
-    backgroundCover.width / (Math.floor(Math.random() * (+170 - +130)) + +140);
+    backgroundCover.width / (Math.floor(Math.random() * (40)) + +90);
   bgCanvas.beginPath();
   bgCanvas.arc(mouseX, mouseY, brushRadius, 0, 2 * Math.PI, true);
   bgCanvas.fillStyle = "#000";
@@ -200,7 +225,6 @@ function getBrushPos(xRef, yRef) {
 
 // create new flower
 function createFlower(callback) {
-  console.log("createflower");
   let flower;
   if (random(0,1) > 0.5) {
     flower = "div.pedal2"
@@ -234,7 +258,7 @@ function flowerFly() {
       rotate: 360,
       loop: false,
       easing: "easeInOutQuad",
-      duration: 6000,
+      duration: 15000,
       delay: anime.stagger(300)
     });
 }

@@ -3,15 +3,18 @@
   padding: 0;
 }
 
-div#lilyPond {
-  position: absolute;
-  background: url("../img/Waterlilies.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
+body {
+  background: url('/img/memphis-mini.png');
+  background-repeat: repeat;
+  margin: 0;
+  display: flex;
+  padding: 3em;
+  overflow: hidden;
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
 }
 
 div.riverNight {
@@ -42,21 +45,7 @@ div.starryNight {
   z-index: 5;
 } */
 
-#bgCover {
-  display: flex;
-  margin: 0 auto;
-  /* background-image: url("../img/Waterlilies.jpg");
-  background-size: cover; */
-  /* width: 100vw;
-  height: 100vh; */
-}
 
-#defaultCanvas0 {
-  display: inline-flex;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
 
 div.container {
   max-width: 960px;
@@ -90,6 +79,40 @@ div.monetBackground {
   margin: 3em;
 }
 
+
+
+div#lilyPond {
+  position: relative;
+  background: url("../img/Waterlilies.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* top: 0;
+  left: 0; */
+}
+
+div#garden {
+  position: absolute;
+  background: url("../img/2048px-Claude_Monet_-_Poppy_Field_-_Google_Art_Project.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+}
+div#monet {
+  position: absolute;
+  background: url("../img/Claude_Monet_portrait.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 4;
+}
+
 div.pedal {
   /* transition: 3s; */
   background: url("/img/red_flower.png");
@@ -111,6 +134,15 @@ div.pedal2 {
   width: 50px;
   height: 50px;
   left: 50vw;
-  top: 30vh;
+  top: 60vh;
   z-index: 5;
 }
+#bgCover {
+  display: flex;
+  margin: 0 auto;
+  /* background-image: url("../img/Waterlilies.jpg");
+  background-size: cover; */
+  /* width: 100vw;
+  height: 100vh; */
+}
+
