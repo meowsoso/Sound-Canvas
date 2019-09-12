@@ -49,7 +49,7 @@ function toggleSong() {
 }
 
 function preload() {
-  song = loadSound("../audio/JoannaWang_Vincent.mp3");
+  song = loadSound("/audio/JoannaWang_Vincent.mp3");
 }
 
 function setup() {

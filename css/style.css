@@ -29,7 +29,7 @@ div.container {
 }
 
 div.container.dark {
-  background: url('/img/tactile_noise_@2X.png');
+  background: url('/img/tactile_noise.png');
   background-repeat: repeat;
 
 }
@@ -51,11 +51,6 @@ div.title h3 {
 
 div#frame {
   position: relative;
-  /* background: url("../img/Waterlilies.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; */
-
-  /* border: 10px solid #0892d0; */
   box-shadow: 8px 8px 11px 3px rgb(32, 24, 32)
 }
 
@@ -67,7 +62,7 @@ div.content--canvas {
 
 div.riverNight {
   position: absolute;
-  background: url("../img/2048px-Starry_Night_Over_the_Rhone.png");
+  background: url("/img/starry_night_over_the_rhone.png");
   background-size: cover;
   background-repeat: no-repeat;
   left: 0;
@@ -79,7 +74,7 @@ div.riverNight {
 
 div.starryNight {
   position: absolute;
-  background: url("../img/2048px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.png");
+  background: url("/img/van_gogh_starry_night.png");
   background-size: cover;
   background-repeat: no-repeat;
   left: 0;
@@ -89,30 +84,9 @@ div.starryNight {
   z-index: 2;
 }
 
-/* canvas#fallingStar {
-  z-index: 5;
-} */
-
-
-
-
-
-div.portraitMonet {
-  background: url("/img/Claude_Monet_portrait.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  display: flexbox;
-  position: absolute;
-  min-width: 25vw;
-  height: 50vh;
-  left: 10vw;
-  top: 20vh;
-  z-index: 3;
-}
-
 div.monetBackground {
   display: inline-block;
-  background: url("/img/Monet_Houses_of_Parliament_Sunset.jpg");
+  background: url("/img/monet_houses_of_parliament_sunset.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
@@ -126,7 +100,7 @@ div.monetBackground {
 
 div.vincentBackground {
   display: inline-block;
-  background: url("/img/Vincent_van_Gogh_The_Prison_Courtyard.jpg");
+  background: url("/img/vincent_van_gogh_the_prison_courtyard.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
@@ -143,7 +117,7 @@ div.vincentBackground {
 
 div#lilyPond {
   position: relative;
-  background: url("../img/Water_Lilies.jpg");
+  background: url("/img/water_lilies.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -151,7 +125,7 @@ div#lilyPond {
 
 div#garden {
   position: absolute;
-  background: url("../img/2048px-Claude_Monet_-_Poppy_Field_-_Google_Art_Project.jpg");
+  background: url("/img/claude_monet_poppy_field.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -163,7 +137,7 @@ div#garden {
 }
 div#monet {
   position: absolute;
-  background: url("../img/Claude_Monet_portrait.jpg");
+  background: url("/img/claude_monet_portrait.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -201,10 +175,7 @@ div.pedal2 {
 #bgCover {
   display: flex;
   margin: 0 auto;
-  /* background-image: url("../img/Waterlilies.jpg");
-  background-size: cover; */
-  /* width: 100vw;
-  height: 100vh; */
+
 }
 
 div.songInfo {

@@ -25,7 +25,7 @@ function toggleSong() {
 }
 
 function preload() {
-  song = loadSound("../audio/Helios - Nothing It Can.mp3");
+  song = loadSound("/audio/Helios - Nothing It Can.mp3");
 
 }
 
@@ -174,7 +174,7 @@ backgroundCover.width / (Math.floor(Math.random() * (+160 - +140)) + +140);
 bgCanvas.scale(2, 2);
 
 img = new Image();
-img.src = "../img/2048px-Claude_Monet_-_Woman_with_a_Parasol_-_Madame_Monet_and_Her_Son_-_Google_Art_Project.jpg";
+img.src = "/img/claude_monet_woman_with_a_parasol.jpg";
 img.onload = function() {
   bgCanvas.imageSmoothingEnabled = false;
   bgCanvas.drawImage(img, 0, 0, canvasWidth, canvasHeight);
