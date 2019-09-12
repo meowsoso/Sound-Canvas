@@ -119,7 +119,7 @@ function isRipple(volLevel, currentTime) {
   if (currentTime > 240) {
     return Math.abs(volLevel - vol) / vol > 0.6 
   } else if (currentTime > 160)
-  return Math.abs(volLevel - vol) / vol > 0.32;
+  return Math.abs(volLevel - vol) / vol > 0.3;
 }
 
 // draw lines as raindrops

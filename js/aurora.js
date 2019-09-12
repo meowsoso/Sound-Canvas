@@ -1,5 +1,7 @@
 "use strict";
 
+$('div.songInfo').hide();
+
 // TODO: put in util
 $("div.starryNight").hide();
 let song;
@@ -42,6 +44,7 @@ function toggleSong() {
     song.pause();
   } else {
     song.play();
+    $('div.songInfo').fadeIn(5000);
   }
 }
 

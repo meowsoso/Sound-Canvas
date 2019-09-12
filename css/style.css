@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +7,11 @@
 
 
 body {
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 }
+
+
 div.container {
   background: url('/img/memphis-mini.png');
   background-repeat: repeat;
@@ -28,6 +33,21 @@ div.container.dark {
   background-repeat: repeat;
 
 }
+
+div.title {
+  line-height: 3em;
+  font-size: 2em;
+  display: inline-block;
+  width: 50vw;
+}
+
+div.title h3 {
+  font-size: 24px;
+  border-top: 3px solid black;
+  text-align: right;
+}
+
+
 
 div#frame {
   position: relative;
@@ -91,24 +111,39 @@ div.portraitMonet {
 }
 
 div.monetBackground {
-  display: flex;
+  display: inline-block;
   background: url("/img/Monet_Houses_of_Parliament_Sunset.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  position: relative;
-  min-width: 80vw;
+  position: absolute;
+  width: 100vw;
   height: 100vh;
   right: 0;
   top: 0;
-  padding: 3em;
-  margin: 3em;
+  margin: 0.5em 0.5em;
+  z-index: -1;
 }
+
+div.vincentBackground {
+  display: inline-block;
+  background: url("/img/Vincent_van_Gogh_The_Prison_Courtyard.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  margin: 0.5em 0.5em;
+  z-index: -1;
+}
+
 
 
 
 div#lilyPond {
   position: relative;
-  background: url("../img/Waterlilies.jpg");
+  background: url("../img/Water_Lilies.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -176,10 +211,10 @@ div.songInfo {
   position: absolute;
   top: 3%;
   right: 2%;
-  height: 2em;
-  width: 10em;
+  height: 1.5em;
+  width: 12em;
 }
-div.songInfo.vincent {
+div.songInfo.vin {
   color: white;
 }
 
@@ -227,4 +262,37 @@ button:hover {
 
 button.back {
   left: 54%
+}
+
+div.artist {
+  position: relative;
+  min-width: 50vw;
+  height: 70vh;
+  margin: 0 auto;
+  padding: 1em;
+  margin: 100px 200px;
+}
+div.vincent {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  text-align: center;
+}
+
+div.vincent img {
+  width: 15vw;
+}
+div.monet {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  text-align: center;
+}
+div.monet img {
+  width: 15vw;
+}
+
+p {
+  background-color: rgba(255,255,255, 0.4);
+  border-radius: 0.5em;
 }
