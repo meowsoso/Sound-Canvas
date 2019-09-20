@@ -2,7 +2,7 @@
 Sound-Canvas is a static web application that combines dynamic paintings with music and audio visualisation to create serene art appreciation experience.
 
 This page is deployed on Github page:
-[Canvas-Sound Page](https://meowsoso.github.io/Sound-Canvas/)
+[Sound-Canvas Page](https://meowsoso.github.io/Sound-Canvas/)
 
 ### Features
 - Includes a landing page which user can choose artist from the gallery.
