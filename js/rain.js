@@ -7,40 +7,29 @@ let amp;
 let vol = 0;
 let compressor;
 let currentTime;
-let flowerReady = true
-let canvasWidth = window.innerWidth *0.5;
-let canvasHeight = window.innerHeight *0.8;
-$('div.pedal').hide()
-$('div.pedal2').hide()
-$('div.songInfo').hide()
-
-function toggleSong() {
-  if (song.isPlaying()) {
-    song.pause();
-  } else {
-    song.play();
-    $('div#monet').fadeOut(5000);
-    $('div.songInfo').fadeIn(10000);
-  }
-}
+let flowerReady = true;
+let canvasWidth = window.innerWidth * 0.5;
+let canvasHeight = window.innerHeight * 0.8;
+$("div.pedal").hide();
+$("div.pedal2").hide();
+$("div.songInfo").hide();
 
 function preload() {
   song = loadSound("./audio/helios-nothing_it_can.mp3");
-
 }
 
 function setup() {
   frameRate(30);
   const p5Canvas = createCanvas(canvasWidth, canvasHeight);
-  p5Canvas.parent('lilyPond');
-  p5Canvas.style('position', 'absolute');
-  p5Canvas.style('top', '0');
-  p5Canvas.style('border', '5px solid rgba(34, 19, 2, 0.8)');
-  
-  pondSize()
+  p5Canvas.parent("lilyPond");
+  p5Canvas.style("position", "absolute");
+  p5Canvas.style("top", "0");
+  p5Canvas.style("border", "5px solid rgba(34, 19, 2, 0.8)");
 
+  pondSize();
   button = createButton("Toggle");
   button.mousePressed(toggleSong);
+
   // play music and get amp
   amp = new p5.Amplitude();
   compressor = new p5.Compressor();
@@ -67,14 +56,14 @@ function draw() {
     flowerFly();
     flowerReady = false;
   }
- 
-// control flower and rain
+
+  // control flower and rain
   if (isChange(volLevel) && currentTime < 270) {
     if (currentTime > 75) {
       nDrops = map(vol, 0, 1, 0, 1000);
-    } else if (currentTime > 23 && currentTime < 60 ) {
+    } else if (currentTime > 23 && currentTime < 60) {
       createFlower(fadeInEffect);
-    } 
+    }
     vol = volLevel;
   }
   //   call rain;
@@ -88,22 +77,31 @@ function draw() {
     drawDot(random(width), random(height));
   }
 
-
-
   if (currentTime > 70) {
-    $('div#garden').fadeOut(8000);
+    $("div#garden").fadeOut(8000);
   }
-
+  // portrait fade in
   if (currentTime > 274) {
-    $('div#monet').fadeIn(6000);
+    $("div#monet").fadeIn(6000);
   }
 }
 
-
+function toggleSong() {
+  if (song.isPlaying()) {
+    song.pause();
+  } else {
+    song.play();
+    $("div#monet").fadeOut(5000);
+    $("div.songInfo").fadeIn(10000);
+  }
+}
 
 // adjust lilypond size
 function pondSize() {
-  $('div.lilyPond').css('width', canvasWidth+"px").css('height', canvasHeight, canvasHeight+"px").css('top', '0');
+  $("div.lilyPond")
+    .css("width", canvasWidth + "px")
+    .css("height", canvasHeight, canvasHeight + "px")
+    .css("top", "0");
 }
 
 // check if vol change more than 30%
@@ -113,13 +111,10 @@ function isChange(volLevel) {
   return Math.abs(volLevel - vol) / vol > 0.35;
 }
 
-
-
 function isRipple(volLevel, currentTime) {
   if (currentTime > 240) {
-    return Math.abs(volLevel - vol) / vol > 0.6 
-  } else if (currentTime > 160)
-  return Math.abs(volLevel - vol) / vol > 0.3;
+    return Math.abs(volLevel - vol) / vol > 0.6;
+  } else if (currentTime > 160) return Math.abs(volLevel - vol) / vol > 0.3;
 }
 
 // draw lines as raindrops
@@ -182,8 +177,7 @@ img.onload = function() {
 
 // make canvas disappear
 function drawDot(mouseX, mouseY) {
-  brushRadius =
-    backgroundCover.width / (Math.floor(Math.random() * (40)) + +90);
+  brushRadius = backgroundCover.width / (Math.floor(Math.random() * 40) + +90);
   bgCanvas.beginPath();
   bgCanvas.arc(mouseX, mouseY, brushRadius, 0, 2 * Math.PI, true);
   bgCanvas.fillStyle = "#000";
@@ -210,38 +204,40 @@ function getBrushPos(xRef, yRef) {
 function createFlower(callback) {
   let flower;
   if (random() > 0.5) {
-    flower = "div.pedal2"
+    flower = "div.pedal2";
   } else {
-    flower = "div.pedal"
+    flower = "div.pedal";
   }
-  $(flower).first()
-      .clone()
-      // .removeClass("pedal")
-      .css(
-        "left", random(window.innerWidth))
-      .css(
-        "top", random(window.innerHeight * 0.5, window.innerHeight))
-      .appendTo("body")
-      callback()
- }
-    
-  function fadeInEffect() {
-    $("div.pedal").last().fadeIn(3000);
-    $("div.pedal2").last().fadeIn(3000);
-  }
+  $(flower)
+    .first()
+    .clone()
+    // .removeClass("pedal")
+    .css("left", random(window.innerWidth))
+    .css("top", random(window.innerHeight * 0.5, window.innerHeight))
+    .appendTo("body");
+  callback();
+}
+
+function fadeInEffect() {
+  $("div.pedal")
+    .last()
+    .fadeIn(3000);
+  $("div.pedal2")
+    .last()
+    .fadeIn(3000);
+}
 
 // flower flies
 function flowerFly() {
-  anime(
-    {
-      // targets: `div.${volLevel}`,
-      targets: ["div.pedal", "div.pedal2"],
-      translateX: -2000,
-      translateY: -800,
-      rotate: 360,
-      loop: false,
-      easing: "easeInOutQuad",
-      duration: 15000,
-      delay: anime.stagger(300)
-    });
+  anime({
+    // targets: `div.${volLevel}`,
+    targets: ["div.pedal", "div.pedal2"],
+    translateX: -2000,
+    translateY: -800,
+    rotate: 360,
+    loop: false,
+    easing: "easeInOutQuad",
+    duration: 15000,
+    delay: anime.stagger(300)
+  });
 }
