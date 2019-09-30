@@ -8,8 +8,15 @@ let vol = 0;
 let compressor;
 let currentTime;
 let flowerReady = true;
-let canvasWidth = window.innerWidth * 0.5;
-let canvasHeight = window.innerHeight * 0.8;
+let canvasWidth, canvasHeight;
+// set canvas size
+if (window.innerWidth < 800) {
+  canvasWidth = window.innerWidth * 0.8;
+  canvasHeight = window.innerHeight * 0.7;
+} else {
+  canvasWidth = window.innerWidth * 0.4;
+  canvasHeight = window.innerHeight * 0.8;
+}
 $("div.pedal").hide();
 $("div.pedal2").hide();
 $("div.songInfo").hide();

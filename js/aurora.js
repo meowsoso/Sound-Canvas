@@ -1,8 +1,4 @@
-"use strict";
-
-$('div.songInfo').hide();
-
-// TODO: put in util
+$("div.songInfo").hide();
 $("div.starryNight").hide();
 let song;
 let button;
@@ -14,10 +10,8 @@ let fft;
 let spectrum;
 // TODO: put in object  For shooting stars
 let stars = [];
-let canvasWidth = window.innerWidth *0.85;
-let canvasHeight = window.innerHeight *0.8;
-
-
+let canvasWidth = window.innerWidth * 0.85;
+let canvasHeight = window.innerHeight * 0.7;
 
 const swirlParams = {
   particleCount: 1024,
@@ -44,7 +38,7 @@ function toggleSong() {
     song.pause();
   } else {
     song.play();
-    $('div.songInfo').fadeIn(5000);
+    $("div.songInfo").fadeIn(5000);
   }
 }
 
@@ -54,19 +48,19 @@ function preload() {
 
 function setup() {
   frameRate(30);
-  createNewCanvas();  
+  createNewCanvas();
   resize();
   initRays();
   // set up swirl particle
   initParticles();
   // set up stars
   initStars();
-  frameSize()
-  
+  frameSize();
+
   const p5Canvas = createCanvas(canvasWidth, canvasHeight);
-  p5Canvas.parent('frame');
-  p5Canvas.style('position', 'absolute');
-  p5Canvas.style('top', '0');
+  p5Canvas.parent("frame");
+  p5Canvas.style("position", "absolute");
+  p5Canvas.style("top", "0");
   button = createButton("Toggle");
   button.mousePressed(toggleSong);
 
@@ -90,7 +84,7 @@ function draw() {
   spectrum = fft.analyze();
   if (currentTime < 110) {
     drawAurora();
-  } else if (currentTime > 110){
+  } else if (currentTime > 110) {
     if (isChange(volLevel) && currentTime > 146) {
       shootStar();
       vol = volLevel;
@@ -99,11 +93,13 @@ function draw() {
   }
 }
 
-// adjust frame size 
+// adjust frame size
 function frameSize() {
-  $('div#frame').css('width', canvasWidth+"px").css('height', canvasHeight, canvasHeight+"px").css('top', '0');
+  $("div#frame")
+    .css("width", canvasWidth + "px")
+    .css("height", canvasHeight + "px")
+    .css("top", "-30px");
 }
-
 
 // check if vol change more than 30%
 function isChange(volLevel) {
@@ -341,7 +337,7 @@ function createNewCanvas() {
   };
   canvas.b.style = `
 		position: absolute;
-		top: 0;
+		top: -30;
 		left: 0;
 		width: 100%;
 		height: 100%;

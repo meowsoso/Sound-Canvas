@@ -15,14 +15,14 @@ div.container {
   background-repeat: repeat;
   margin: 0;
   display: flex;
-  padding: 3em;
+  padding: 30px;
   overflow: hidden;
   /* This centers our sketch horizontally. */
   justify-content: center;
 
   /* This centers our sketch vertically. */
   align-items: center;
-  min-width: 980px;
+  min-width: 960px;
   height: 100vh;
 }
 
@@ -108,7 +108,8 @@ div.vincentBackground {
 }
 
 div#lilyPond {
-  position: relative;
+  position: absolute;
+  top: 3vh;
   background: url("../img/water_lilies.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -117,7 +118,7 @@ div#lilyPond {
 
 div#garden {
   position: absolute;
-  background: url("../img/claude_monet_poppy_field.jpg");
+  background: url("../img/claude_monet_poppy_field.jpg") center;
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -129,7 +130,7 @@ div#garden {
 }
 div#monet {
   position: absolute;
-  background: url("../img/claude_monet_portrait.jpg");
+  background: url("../img/claude_monet_portrait.jpg") center;
   background-size: cover;
   background-repeat: no-repeat;
   border: 5px solid rgba(34, 19, 2, 0.8);
@@ -214,7 +215,7 @@ button {
   position: absolute;
   bottom: 0;
   left: 35vw;
-  margin: 1em;
+  margin: 5px;
 }
 
 button:hover {
